@@ -17,9 +17,9 @@ architecture arqdata of datapath is
     signal setup: std_logic_vector (13 downto 0);
     signal mux70_out, mux71_out, mux60_out, mux61_out, mux50_out, mux51_out
     ,mux40_out, mux41_out, mux30_out, mux31_out,mux20_out, mux21_out
-    ,mux10_out, mux11_out, mux00_out, mux01_out: std_logic_vector (6 downto 0);
+    ,mux10_out, mux11_out, mux00_out, mux01_out, dec6_out: std_logic_vector (6 downto 0);
     signal f_points, u_points: std_logic_vector (11 downto 0);
-    signal round, time, vazio, dec6_out, dec4_out, dec20_out, dec21_out
+    signal round, time, vazio, dec4_out, dec20_out, dec21_out
     ,dec22_out, dec10_out, dec11_out, dec12_out
     ,dec00_out, dec01_out, dec02_out, dec03_out: std_logic_vector(3 downto 0);
     signal round_bcd: std_logic_vector(7 downto 0);
@@ -127,7 +127,49 @@ architecture arqdata of datapath is
 
     or_lt <= (r1 or e4);
     and_bonus <= (e3 and not(key_entra));
-    xor_s <= (seq_fpga xor sw_entra(17 downto 0));
+    xor_s <= (seq_fpga xor sw_entra(17 downto 0));e
+    (+1)
+    R
+    E3 E
+    tc=Data
+    end_time
+    TIME
+    4
+    14
+    Counter_round
+    (-1)
+    SET —> SETUP(3.. 0)-1
+    E
+    tc=Data
+    E4
+    E1
+    CLK_500Hz
+    4
+    SEQ1
+    end_FPGA
+    R
+    E
+    4
+    4
+    Data
+    end_FPGA
+    E2
+    R1
+    18
+    ROUND
+    SEQ_FPGA
+    buttonsync
+    BTN(1)
+    18
+    18
+    SEQ_FPGA
+    SETUP
+    2 2
+    BTN
+    tc=Data
+    4
+    Data
+    4
     f_points <= "00" & round & not(bonus);
     u_points <= "00" & not(round) & bonus;
 
@@ -152,7 +194,7 @@ architecture arqdata of datapath is
     MUX7_1: mux2_1 port map ("0001110", "1000001", end_round_aux, mux71_out);
     MUX7_2: mux2_1 port map (mux70_out, mux71_out, e6, h7);
 
-    DEC6: decodificador port map (setup(9 downto 6), dec6_out );
+    DEC6: decodificador port map (setup(9 downto 6), dec6_out);
     MUX6_0: mux2_1 port map (dec6_out, "0100011", e5, mux60_out);
     MUX6_1: mux2_1 port map ("0001100", "0010010", end_round_aux, mux61_out);
     MUX6_2: mux2_1 port map (mux60_out, mux61_out, e6, h6);
