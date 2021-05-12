@@ -25,7 +25,7 @@ architecture Rom_Arch of SEQ4 is
 	12 => "000000000001101100",
 	13 => "000000000000110110",
 	14 => "000000000000011011",
-	15 => "111100111110001111",);
+	15 => "111100111110001111");
 	
 begin
    process (address) --//o adress vai ser o número da rodada.
