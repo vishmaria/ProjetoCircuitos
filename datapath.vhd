@@ -26,11 +26,18 @@ architecture arqdata of datapath is
     signal sum_out, bonus: std_logic_vector(5 downto 0);
     signal or_lt, and_bonus, end_round_aux: std_logic;
 
-    component mux2_1 is port (
+    component mux is port (
     	F1: in std_logic_vector(17 downto 0);
     	F2: in std_logic_vector(17 downto 0);
     	sel: in std_logic;
     	F: out std_logic_vector(17 downto 0));
+    end component;
+
+    component mux2_1 is port (
+    	F1: in std_logic_vector(6 downto 0);
+    	F2: in std_logic_vector(6 downto 0);
+    	sel: in std_logic;
+    	F: out std_logic_vector(6 downto 0));
     end component;
     
     component mux4_1 is port (
@@ -139,13 +146,13 @@ architecture arqdata of datapath is
     DECbcd: dec_bcd port map (round, round_bcd); 
 
    
-    MUXled: mux2_1 port map ("000000000000000000",seq_fpga, e2, led_out );
+    MUXled: mux port map ("000000000000000000",seq_fpga, e2, led_out );
 
     MUX7_0: mux2_1 port map ("1000111", "0101111", e5, mux70_out); 
     MUX7_1: mux2_1 port map ("0001110", "1000001", end_round_aux, mux71_out);
     MUX7_2: mux2_1 port map (mux70_out, mux71_out, e6, h7);
 
-    DEC6: decodificador port map (setup(9 downto 6), dec6_out )
+    DEC6: decodificador port map (setup(9 downto 6), dec6_out );
     MUX6_0: mux2_1 port map (dec6_out, "0100011", e5, mux60_out);
     MUX6_1: mux2_1 port map ("0001100", "0010010", end_round_aux, mux61_out);
     MUX6_2: mux2_1 port map (mux60_out, mux61_out, e6, h6);
