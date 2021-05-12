@@ -110,7 +110,7 @@ architecture arqdata of datapath is
     S3: SEQ3 port map (round, seq3_out);
     S4: SEQ4 port map (round, seq4_out);
 
-    DEC: decodificador port map (round, round_bcd); 
+    DECbcd: decodificador port map (round, round_bcd); 
 
     MUX4: mux4_1 port map (seq1_out, seq2_out, seq3_out, seq4_out, sw_entra(5 downto 4), seq_fpga); 
     MUX2: mux2_1 port map ("000000000000000000",seq_fpga, e2, led_out );
