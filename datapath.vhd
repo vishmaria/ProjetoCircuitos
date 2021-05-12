@@ -127,49 +127,7 @@ architecture arqdata of datapath is
 
     or_lt <= (r1 or e4);
     and_bonus <= (e3 and not(key_entra));
-    xor_s <= (seq_fpga xor sw_entra(17 downto 0));e
-    (+1)
-    R
-    E3 E
-    tc=Data
-    end_time
-    TIME
-    4
-    14
-    Counter_round
-    (-1)
-    SET —> SETUP(3.. 0)-1
-    E
-    tc=Data
-    E4
-    E1
-    CLK_500Hz
-    4
-    SEQ1
-    end_FPGA
-    R
-    E
-    4
-    4
-    Data
-    end_FPGA
-    E2
-    R1
-    18
-    ROUND
-    SEQ_FPGA
-    buttonsync
-    BTN(1)
-    18
-    18
-    SEQ_FPGA
-    SETUP
-    2 2
-    BTN
-    tc=Data
-    4
-    Data
-    4
+    xor_s <= (seq_fpga xor sw_entra(17 downto 0));
     f_points <= "00" & round & not(bonus);
     u_points <= "00" & not(round) & bonus;
 
@@ -198,6 +156,8 @@ architecture arqdata of datapath is
     MUX6_0: mux2_1 port map (dec6_out, "0100011", e5, mux60_out);
     MUX6_1: mux2_1 port map ("0001100", "0010010", end_round_aux, mux61_out);
     MUX6_2: mux2_1 port map (mux60_out, mux61_out, e6, h6);
+
+
 
   
 end arqdata;
