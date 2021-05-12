@@ -41,6 +41,12 @@ architecture arqdata of datapath is
     	out_hex: out std_logic_vector(6 downto 0));
     end component;
 
+    component dec_bcd is port (
+        G: in std_logic_vector(3 downto 0);
+        out_hex: out std_logic_vector(7 downto 0)
+        );
+        end component;
+
     component registrador is port (
         CLK: in std_logic;
         RST: in std_logic;
@@ -122,7 +128,7 @@ architecture arqdata of datapath is
     Cbonus: contador_bonus port map (sum_out, sw_entra(13 downto 10), e1, clk50, and_bonus, contagem, end_bonus);
     REG:
 
-    DECbcd: decodificador port map (round, round_bcd); 
+    DECbcd: dec_bcd port map (round, round_bcd); 
 
    
     MUXled: mux2_1 port map ("000000000000000000",seq_fpga, e2, led_out );
