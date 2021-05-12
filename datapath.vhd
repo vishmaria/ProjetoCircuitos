@@ -19,11 +19,9 @@ architecture arqdata of datapath is
     ,mux40_out, mux41_out, mux30_out, mux31_out,mux20_out, mux21_out
     ,mux10_out, mux11_out, mux00_out, mux01_out, dec6_out, dec4_out
     , dec20_out, dec21_out,dec22_out, dec10_out, dec11_out
-    , dec12_out: std_logic_vector (6 downto 0);
+    , dec12_out, dec00_out, dec01_out, dec02_out, dec03_out: std_logic_vector (6 downto 0);
     signal f_points, u_points: std_logic_vector (11 downto 0);
-    signal concat_setup, round, time, vazio 
-    
-    ,dec00_out, dec01_out, dec02_out, dec03_out: std_logic_vector(3 downto 0);
+    signal concat_setup, round, time, vazio : std_logic_vector(3 downto 0);
     signal round_bcd: std_logic_vector(7 downto 0);
     signal sum_out, bonus: std_logic_vector(5 downto 0);
     signal or_lt, and_bonus, end_round_aux: std_logic;
@@ -177,6 +175,25 @@ architecture arqdata of datapath is
     DEC20: decodificador port map(time, dec20_out);
     DEC21: decodificador port map(f_points(11 downto 8), dec21_out);
     DEC22: decodificador port map(u_points(11 downto 8), dec22_out);
+    MUX20: mux2_1 port map(dec20_out, "0110111", e5, mux20_out);
+    MUX21: mux2_1 port map(dec21_out, dec22_out, end_round_aux, mux21_out);
+    MUX22: mux2_1 port map(mux20_out, mux21_out, e6, h2);
+    
+    DEC10: decodificador port map(round_bcd(7 downto 4), dec10_out);
+    DEC11: decodificador port map(f_points(7 downto 4), dec11_out);
+    DEC12: decodificador port map(u_points(7 downto 4), dec12_out);
+    MUX10: mux2_1 port map("0000011", dec10_out, e5, mux10_out );
+    MUX11: mux2_1 port map(dec11_out, dec12_out, end_round_aux, mux11_out);
+    MUX12: mux2_1 port map(mux10_out, mux11_out, e6, h1);
+    
+    DEC00: decodificador port map(bonus(3 downto 0), dec00_out);
+    DEC01: decodificador port map(round_bcd(3 downto 0), dec01_out);
+    DEC02: decodificador port map(f_points(3 downto 0), dec02_out);
+    DEC03: decodificador port map(u_points(3 downto 0), dec03_out);
+    MUX00: mux2_1 port map(dec00_out, dec01_out, e5, mux00_out);
+    MUX01: mux2_1 port map(dec02_out, dec03_out, end_round_aux, mux01_out);
+    MUX02: mux2_1 port map(mux00_out, mux01_out, e6, h0);
+    
     
     
 
