@@ -113,7 +113,7 @@ architecture arqdata of datapath is
     S4: SEQ4 port map (round, seq4_out);
 
     MUXrom: mux4_1 port map (seq1_out, seq2_out, seq3_out, seq4_out, sw_entra(5 downto 4), seq_fpga);  
-    Sum: sum port map ((seq_fpga xor sw_entra(17 downto 0)),sum_out);
+    Soma: sum port map ((seq_fpga xor sw_entra(17 downto 0)),sum_out);
     Cbonus: contador_bonus port map (sum_out, sw_entra(13 downto 10), e1, clk50, (e3 and not(key_entra)), contagem, end_bonus);
     REG:
 
