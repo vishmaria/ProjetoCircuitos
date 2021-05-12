@@ -13,7 +13,8 @@ end datapath;
 
 architecture arqdata of datapath is
 
-    signal seq_fpga, seq1_out, seq2_out, seq3_out, seq4_out, xor_s: std_logic_vector(17 downto 0);   
+    signal seq_fpga, seq1_out, seq2_out, seq3_out, seq4_out, xor_s: std_logic_vector(17 downto 0);
+    signal setup: std_logic_vector (13 downto 0);
     signal round, time, vazio: std_logic_vector(3 downto 0);
     signal round_bcd: std_logic_vector(7 downto 0);
     signal sum_out, contagem: std_logic_vector(5 downto 0);
@@ -115,7 +116,7 @@ architecture arqdata of datapath is
     and_bonus <= (e3 and not(key_entra));
     xor_s <= (seq_fpga xor sw_entra(17 downto 0));
 
-    Clevel: contador_crescente port map (sw_entra(9 downto 6), or_lt, clk1, e2, vazio, end_FPGA );
+    Clevel: contador_crescente port map (setup(9 downto 6), or_lt, clk1, e2, vazio, end_FPGA );
     Ctime: contador_crescente port map ("1010",or_lt,clk1, e3, time, end_time);    
     Cround: contador_round port map ("0000", e1, clk50, e4, round, end_round); 
     S1: SEQ1 port map (round, seq1_out);
@@ -123,10 +124,10 @@ architecture arqdata of datapath is
     S3: SEQ3 port map (round, seq3_out);
     S4: SEQ4 port map (round, seq4_out);
 
-    MUXrom: mux4_1 port map (seq1_out, seq2_out, seq3_out, seq4_out, sw_entra(5 downto 4), seq_fpga);  
+    MUXrom: mux4_1 port map (seq1_out, seq2_out, seq3_out, seq4_out, setup(5 downto 4), seq_fpga);  
     Soma: sum port map (xor_s,sum_out);
-    Cbonus: contador_bonus port map (sum_out, sw_entra(13 downto 10), e1, clk50, and_bonus, contagem, end_bonus);
-    REG:
+    Cbonus: contador_bonus port map (sum_out, setup(13 downto 10), e1, clk50, and_bonus, contagem, end_bonus);
+    REG: registrador port map (clk50, r1, e1, sw_entra(13 downto 0), setup(13 downto 0));
 
     DECbcd: dec_bcd port map (round, round_bcd); 
 
