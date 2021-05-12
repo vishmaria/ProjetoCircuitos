@@ -32,7 +32,7 @@ architecture arqdata of datapath is
         F3: in std_logic_vector(17 downto 0);
         F4: in std_logic_vector(17 downto 0);
         SEL: in std_logic_vector(1 downto 0);
-        saida: out std_logic_vector(7 downto 0)
+        saida: out std_logic_vector(17 downto 0)
         );
     end component; 
     
