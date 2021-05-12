@@ -14,16 +14,21 @@ Entity contador_bonus is port (
 end contador_bonus;
 
 Architecture circuito of contador_bonus is
+signal mem_contagem: std_logic_vector(3 downto 0);
     begin
-    P1: process(clock, setup, data, enable, contagem)
+    P1: process(clock, setup, data, enable)
         begin
          if setup= '1' then
              contagem <= "00" & setup_user;
-         elsif (clock'event and clock= '1') and enable ='1')) then
-             contagem <= contagem - data;
+             mem_contagem <= "00" & setup_user;
+             
+         elsif ((clock'event and clock= '1') and enable ='1') then
+             contagem <= mem_contagem - data;
+             mem_contagem <= mem_contagem - data;
+             
          end if;
          --if signed(contagem) <"000000" then
-         if signed(contagem) < 0 then
+         if signed(mem_contagem) < 0 then
              end_count <='1';
          else
               end_count <='0';

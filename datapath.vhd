@@ -195,9 +195,6 @@ architecture arqdata of datapath is
     MUX02: mux2_1 port map(mux00_out, mux01_out, e6, h0);
     
     
-    
-
-
 
   
 end arqdata;
