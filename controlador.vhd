@@ -15,7 +15,9 @@ architecture fsmcontrolador of controlador is
 begin
     P1: process(clock)
   begin
-    if clock'event and clock= '1' then
+    if reset='0' then
+        Eatual <= Start;
+   elsif clock'event and clock= '1' then
       EAtual <= PEstado;
     end if;
   end process;
@@ -32,10 +34,7 @@ begin
                         e2<='0';
                         e1<='1'; 
                         r1<='1'; --reseta tudo
-                        if reset='0' then
-                            PEstado<=setup;
-                        elsif reset='1' then
-                            PEstado<=Start;
+                        PEstado<=Setup;
                         end if;
                         
             when setup =>

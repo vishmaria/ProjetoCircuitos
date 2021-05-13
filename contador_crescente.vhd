@@ -25,7 +25,7 @@ signal mem_contagem: std_logic_vector(3 downto 0);
          if contagem = data then
              end_count <='1';
              contagem <= "0000";
-             else
+        else
              end_count <= '0';
          
          end if;

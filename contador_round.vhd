@@ -22,6 +22,8 @@ Architecture circuito of contador_round is
              contagem <= contagem - 1;
          if contagem = "0000" then
              end_count <='1';
+         else
+            end_count <='0';
          end if;
          end if;
     end process;
