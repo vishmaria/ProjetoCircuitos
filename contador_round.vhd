@@ -18,14 +18,10 @@ Architecture circuito of contador_round is
     P1: process(clock, setup, enable)
         begin
          if setup= '1' then
-             contagem <= vetor-1;
+             contagem <= vetor;
          elsif ((clock'event and clock= '1') and enable ='1') then
              contagem <= contagem - 1;
-         if contagem = "0000" then
-             end_count <='1';
-         else
-            end_count <='0';
-         end if;
          end if;
     end process;
+    end_count <= '1' when contagem = "0000" else '0';
 end circuito;

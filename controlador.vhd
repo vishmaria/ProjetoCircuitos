@@ -32,7 +32,7 @@ begin
                         e4<='0';
                         e3<='0';
                         e2<='0';
-                        e1<='1'; 
+                        e1<='0'; 
                         r1<='1'; --reseta tudo
                         PEstado<=Setup;
                         
@@ -47,7 +47,7 @@ begin
                         r1<='0';
                         if enter='0' then
                             PEstado<=play_fpga;
-                        elsif enter='1' then
+                        else
                             PEstado<=setup;
                         end if;
                         
@@ -61,7 +61,7 @@ begin
                         r1<='0';
                         if end_fpga='1' then
                             PEstado<=play_user;
-                        elsif end_fpga='0' then
+                        else
                             PEstado<=play_fpga;
                         end if;
             
@@ -75,9 +75,10 @@ begin
                         r1<='0';
                         if enter='0' then
                             PEstado <= check;
-                        end if;
-                        if end_time='1' then
+                        elsif end_time='1' then
                             PEstado <= result;
+                        else
+                            PEstado<= play_user;
                         end if;
             
             when check =>
@@ -90,8 +91,7 @@ begin
                         r1<='0';
                         if ((end_round='0') and (end_bonus='0')) then
                             PEstado <= next_round;
-                        end if;
-                        if ((end_round='1') or (end_bonus='1')) then
+                        else
                             PEstado <= result;
                         end if;
             

@@ -21,14 +21,9 @@ Architecture circuito of contador_bonus is
              contagem <= "00" & setup_user;
              
          elsif ((clock'event and clock= '1') and enable ='1') then
-             contagem <= contagem - data;
+             contagem <= std_logic_vector(signed(contagem) - signed(data));
              
          end if;
-         --if signed(contagem) <"000000" then
-         if signed(contagem) <= 0 then
-             end_count <='1';
-         else
-              end_count <='0';
-         end if;
     end process;
+    end_count <= '1' when signed(contagem) <0 else '0';
 end circuito;

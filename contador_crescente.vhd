@@ -11,7 +11,7 @@ Entity contador_crescente is port (
     end_count: out std_logic);
 end contador_crescente;
 Architecture circuito of contador_crescente is
-signal mem_contagem: std_logic_vector(3 downto 0);
+
     begin
     P1: process(clock, reset, enable, data)
         begin

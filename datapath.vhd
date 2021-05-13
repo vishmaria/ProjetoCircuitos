@@ -135,7 +135,8 @@ architecture arqdata of datapath is
     
     Clevel: contador_crescente port map (setup(9 downto 6), or_lt, clk1, e2, vazio, end_FPGA );
     Ctime: contador_crescente port map ("1010",or_lt,clk1, e3, tim3, end_time);    
-    Cround: contador_round port map ("0000", setup(3 downto 0), e1, clk50, e4, round, end_round); 
+    Cround: contador_round port map ("0000", setup(3 downto 0), e1, clk50, e4, round, end_round_aux); 
+    end_round <= end_round_aux;
     S1: SEQ1 port map (round, seq1_out);
     S2: SEQ2 port map (round, seq2_out);   
     S3: SEQ3 port map (round, seq3_out);
