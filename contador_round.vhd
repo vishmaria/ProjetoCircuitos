@@ -5,6 +5,7 @@ use ieee.numeric_std.all;
 
 Entity contador_round is port ( 
     data: in std_logic_vector(3 downto 0);
+    vetor: in std_logic_vector(3 downto 0);
     setup: in std_logic;
     clock: in std_logic;
     enable: in std_logic;
@@ -17,7 +18,7 @@ Architecture circuito of contador_round is
     P1: process(clock, setup, enable)
         begin
          if setup= '1' then
-             contagem <= data-1;
+             contagem <= vetor-1;
          elsif ((clock'event and clock= '1') and enable ='1') then
              contagem <= contagem - 1;
          if contagem = "0000" then
