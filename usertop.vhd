@@ -37,9 +37,8 @@ component ButtonSync is port (
 end component;
 
 begin
-
-botao:buttonsync port map (key(0), key(1), CLK_500Hz , BTN(0), BTN(1));
-data: datapath port map (sw(17 downto 0), r1, e1, e2, e3, e4, e5, e6, clk_1hz, CLK_500Hz,BTN(1), HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, HEX6, HEX7, ledr(17 downto 0), end_time, end_bonus, end_round, end_FPGA);
+botao:buttonsync port map (KEY(0), KEY(1), CLK_500Hz , BTN(0), BTN(1));
+data: datapath port map (sw(17 downto 0), r1, e1, e2, e3, e4, e5, e6, clk_1hz, CLK_500Hz,BTN(1), HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, HEX6, HEX7, LEDR(17 downto 0), end_time, end_bonus, end_round, end_FPGA);
 control: controlador port map (CLK_500Hz, BTN(0), BTN(1), end_FPGA, end_bonus, end_time, end_round, r1, e1, e2, e3, e4, e5, e6);
 
 

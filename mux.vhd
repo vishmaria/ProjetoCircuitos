@@ -2,7 +2,6 @@ library IEEE;
 use IEEE.Std_Logic_1164.all;
 
 entity mux is
-
 port (
 	F1: in std_logic_vector(17 downto 0);
 	F2: in std_logic_vector(17 downto 0);

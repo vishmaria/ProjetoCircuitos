@@ -15,13 +15,15 @@ architecture arqdata of datapath is
 
     signal seq_fpga, seq1_out, seq2_out, seq3_out, seq4_out, xor_s: std_logic_vector(17 downto 0);
     signal setup: std_logic_vector (13 downto 0);
+    
     signal mux70_out, mux71_out, mux60_out, mux61_out, mux50_out, mux51_out
     ,mux40_out, mux41_out, mux30_out, mux31_out,mux20_out, mux21_out
     ,mux10_out, mux11_out, mux00_out, mux01_out, dec6_out, dec4_out
     , dec20_out, dec21_out,dec22_out, dec10_out, dec11_out
     , dec12_out, dec00_out, dec01_out, dec02_out, dec03_out: std_logic_vector (6 downto 0);
+    
     signal f_points, u_points: std_logic_vector (11 downto 0);
-    signal concat_setup, round, time, vazio : std_logic_vector(3 downto 0);
+    signal concat_setup, round, tim3, vazio : std_logic_vector(3 downto 0);
     signal round_bcd: std_logic_vector(7 downto 0);
     signal sum_out, bonus: std_logic_vector(5 downto 0);
     signal or_lt, and_bonus, end_round_aux: std_logic;
@@ -79,7 +81,7 @@ architecture arqdata of datapath is
         reset: in std_logic;
         clock: in std_logic;
         enable: in std_logic;
-        contagem: out std_logic_vector(3 downto 0);
+        contagem: buffer std_logic_vector(3 downto 0);
         end_count: out std_logic);
     end component;
     
@@ -88,7 +90,7 @@ architecture arqdata of datapath is
         setup: in std_logic;
         clock: in std_logic;
         enable: in std_logic;
-        contagem: out std_logic_vector(3 downto 0);
+        contagem: buffer std_logic_vector(3 downto 0);
         end_count: out std_logic);
     end component;
     
@@ -98,7 +100,7 @@ architecture arqdata of datapath is
         setup: in std_logic;
         clock: in std_logic;
         enable: in std_logic;
-        contagem: out std_logic_vector(5 downto 0);
+        contagem: buffer std_logic_vector(5 downto 0);
         end_count: out std_logic);
     end component;
 
@@ -127,12 +129,11 @@ architecture arqdata of datapath is
 
     or_lt <= (r1 or e4);
     and_bonus <= (e3 and not(key_entra));
-    xor_s <= (seq_fpga xor sw_entra(17 downto 0));
-    f_points <= "00" & round & not(bonus);
-    u_points <= "00" & not(round) & bonus;
-
+    
+    REG: registrador port map (clk50, r1, e1, sw_entra(13 downto 0), setup(13 downto 0));
+    
     Clevel: contador_crescente port map (setup(9 downto 6), or_lt, clk1, e2, vazio, end_FPGA );
-    Ctime: contador_crescente port map ("1010",or_lt,clk1, e3, time, end_time);    
+    Ctime: contador_crescente port map ("1010",or_lt,clk1, e3, tim3, end_time);    
     Cround: contador_round port map ("0000", e1, clk50, e4, round, end_round); 
     S1: SEQ1 port map (round, seq1_out);
     S2: SEQ2 port map (round, seq2_out);   
@@ -142,9 +143,11 @@ architecture arqdata of datapath is
     MUXrom: mux4_1 port map (seq1_out, seq2_out, seq3_out, seq4_out, setup(5 downto 4), seq_fpga);  
     Soma: sum port map (xor_s,sum_out);
     Cbonus: contador_bonus port map (sum_out, setup(13 downto 10), e1, clk50, and_bonus, bonus, end_bonus);
-    REG: registrador port map (clk50, r1, e1, sw_entra(13 downto 0), setup(13 downto 0));
     DECbcd: dec_bcd port map (round, round_bcd); 
     
+    xor_s <= (seq_fpga xor sw_entra(17 downto 0));
+    f_points <= "00" & round & not(bonus);
+    u_points <= "00" & not(round) & bonus;
     concat_setup <= "00" & setup(5 downto 4);
 
    
@@ -172,7 +175,7 @@ architecture arqdata of datapath is
     MUX31: mux2_1 port map("0110111", "0110111", end_round_aux, mux31_out);
     MUX32: mux2_1 port map(mux30_out, mux31_out, e6, h3);
     
-    DEC20: decodificador port map(time, dec20_out);
+    DEC20: decodificador port map(tim3, dec20_out);
     DEC21: decodificador port map(f_points(11 downto 8), dec21_out);
     DEC22: decodificador port map(u_points(11 downto 8), dec22_out);
     MUX20: mux2_1 port map(dec20_out, "0110111", e5, mux20_out);

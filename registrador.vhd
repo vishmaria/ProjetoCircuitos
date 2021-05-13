@@ -13,10 +13,10 @@ architecture behv of registrador is
 begin
  process (CLK, RST, D)
  begin
-	if RST = '0' then
+	if RST = '1' then
 		Q <= "00000000000000";
 	elsif CLK'event and CLK = '1' then
-	if EN = '0' then
+	if EN = '1' then
 		Q <= D;
  end if;
  end if;

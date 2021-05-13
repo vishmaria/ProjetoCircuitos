@@ -12,8 +12,6 @@ architecture fsmcontrolador of controlador is
     type STATES is (start, setup, play_fpga, play_user, check, result, next_round, wait1);
     signal EAtual, PEstado: STATES;
     
-    
-
 begin
     P1: process(clock)
   begin
@@ -21,6 +19,7 @@ begin
       EAtual <= PEstado;
     end if;
   end process;
+  
     
     P2: process(Eatual,reset,enter, end_fpga, end_bonus, end_time, end_round)
     begin
@@ -31,7 +30,7 @@ begin
                         e4<='0';
                         e3<='0';
                         e2<='0';
-                        e1<='0'; 
+                        e1<='1'; 
                         r1<='1'; --reseta tudo
                         if reset='0' then
                             PEstado<=setup;
