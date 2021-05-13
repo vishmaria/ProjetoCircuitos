@@ -13,21 +13,20 @@ Entity contador_crescente is port (
 end contador_crescente;
 
 Architecture circuito of contador_crescente is
-signal mem_contagem: std_logic_vector(3 downto 0);
-    begin
-    P1: process(clock, reset, enable, data)
+    signal mem_contagem: std_logic_vector(3 downto 0);
         begin
-         if reset= '1' then
-             contagem <= "0000";
-         elsif ((clock'event and clock= '1') and enable ='1') then
-             contagem <= contagem+1;
-        end if;
-         if contagem = data then
-             end_count <='1';
-             contagem <= "0000";
-        else
-             end_count <= '0';
-         
-         end if;
-    end process;
+        P1: process(clock, reset, enable, data)
+            begin
+             if reset= '1' then
+                 contagem <= "0000";
+             elsif ((clock'event and clock= '1') and enable ='1') then
+                 contagem <= contagem+1;
+            end if;
+        end process;
+    if contagem = data then
+                 end_count <='1';
+                 contagem <= "0000";
+                 else
+                 end_count <= '0';
+    end if;
 end circuito;
