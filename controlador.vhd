@@ -35,7 +35,7 @@ begin
                         e1<='1'; 
                         r1<='1'; --reseta tudo
                         PEstado<=Setup;
-                        end if;
+                        
                         
             when setup =>
                         e6<='0';
